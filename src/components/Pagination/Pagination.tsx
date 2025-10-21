@@ -3,7 +3,7 @@ import css from './Pagination.module.css';
 
 interface PaginationProps {
     page: number,
-    onChangeFn: () => void,
+    onChangeFn: (selectedPage: number) => void,
     total: number
 }
 
@@ -13,7 +13,7 @@ const Pagination = ({ page, onChangeFn, total }:PaginationProps) => {
             pageCount={total}
             pageRangeDisplayed={5}
             marginPagesDisplayed={1}
-            onPageChange={({ selected }) => onCgangeFn(selected + 1)}
+            onPageChange={({ selected }) => onChangeFn(selected + 1)}
             forcePage={page - 1}
             containerClassName={css.pagination}
             activeClassName={css.active}
