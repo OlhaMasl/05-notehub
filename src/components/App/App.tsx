@@ -20,7 +20,6 @@ function App() {
     placeholderData: keepPreviousData
  });
   
-  console.log(data);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   
