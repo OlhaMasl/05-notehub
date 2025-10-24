@@ -10,7 +10,7 @@ import NoteForm from '../NoteForm/NoteForm';
 import SearchBox from '../SearchBox/SearchBox';
 
 function App() {
-  const [searchValue, setSerchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,7 +24,8 @@ function App() {
   const closeModal = () => setIsModalOpen(false);
   
   const handleSearch = useDebouncedCallback((search: string) => {
-    setSerchValue(search)
+    setSearchValue(search)
+    setCurrentPage(1)
   }, 1000);
  
   return (
@@ -38,7 +39,7 @@ function App() {
         <main>
           {data && data?.notes.length > 0 && <NoteList noteSet={data?.notes} />}
         </main>
-        {isModalOpen && <Modal>
+        {isModalOpen && <Modal onClose={closeModal}>
           <NoteForm onClose={ closeModal} />
         </Modal>}
 </div>

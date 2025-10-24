@@ -30,7 +30,7 @@ onClose: ()=> void,
 
 interface NewNote {
   title: string,
-  content?: string,
+  content: string,
   tag: NoteTag
 };
 
@@ -40,17 +40,12 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
     
     const queryClient = useQueryClient();
 
-    const { mutate, isPending} = useMutation({
-        mutationFn: async (newNote: NewNote) => {
-            createNote(newNote)
-        },
+    const { mutate, isPending, isSuccess} = useMutation({
+        mutationFn: (newNote: NewNote) => createNote(newNote),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['notes'] });
             onClose(); 
         },
-        // onError: (error) => {
-        //     // An error happened!
-        // }
     });
 
     const formValues: FormValues = {
@@ -61,7 +56,9 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
 
     const handleSubmit = (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
         mutate(values);
-        formikHelpers.resetForm();
+        if (isSuccess) {
+         formikHelpers.resetForm();   
+        }
     };
 
     return (
